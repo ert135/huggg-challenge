@@ -21,12 +21,23 @@ const MOCK_BRAND_2 = {
   ],
 }
 
+const MOCK_BRAND_3 = {
+  id: "9632e80b-81c1-40fa-a062-8cc7f3674dd2",
+  products: [
+    "456"
+  ],
+  stores: [
+    "cc46315e-3d4e-482d-adbc-75fbf3a60701"
+  ],
+}
+
 jest.mock('../dataService', () => {
   return () => (
     {
       data: [
         MOCK_BRAND,
         MOCK_BRAND_2,
+        MOCK_BRAND_3,
       ],
       embedded: {
         stores: [
@@ -35,6 +46,9 @@ jest.mock('../dataService', () => {
           },
           {
             id: "15af5bb6-f352-11e8-80cd-02e611b48058"
+          },
+          {
+            id: "cc46315e-3d4e-482d-adbc-75fbf3a60701"
           }
         ]
       }
@@ -60,8 +74,14 @@ describe('Store Controller', () => {
   describe('findAll', () => {
     it('should get all stores', async () => {
       const result = controller.findAll();
-      expect(result.length).toBe(2);
-      expect(result).toEqual([{id: MOCK_BRAND.stores[0]}, { id: MOCK_BRAND_2.stores[0]}]);
+      expect(result.length).toBe(3);
+      expect(result).toEqual(
+        [
+          { id: MOCK_BRAND.stores[0] },
+          { id: MOCK_BRAND_2.stores[0] },
+          { id: MOCK_BRAND_3.stores[0] },
+        ]
+      );
     });
   });
 
@@ -86,10 +106,20 @@ describe('Store Controller', () => {
       expect(result).toEqual([{id: MOCK_BRAND.stores[0]}]);
     });
 
-    it('returns undefined if no item is found', async () => {
+    it('returns consolidated data when a product is sold in different stores', async () => {
+      const result = controller.findByProductId({id: "456"});
+
+      expect(result).toEqual(
+        [
+          { id: "15af5bb6-f352-11e8-80cd-02e611b48058"},
+          { id: "cc46315e-3d4e-482d-adbc-75fbf3a60701"},
+        ]);
+    });
+
+    it('returns [] if no item is found', async () => {
       const result = controller.findByProductId({id: "_"});
 
-      expect(result).toBe(undefined);
+      expect(result).toEqual([]);
     });
   });
 });

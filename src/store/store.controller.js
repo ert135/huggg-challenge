@@ -2,8 +2,8 @@ import { Bind, Controller, Get, Param } from '@nestjs/common';
 import fetchData  from "../dataService";
 import mapStore from "../utils/mapStore/mapStore";
 import findById from "../utils/findById/findById";
-import findByProductIdId from '../utils/findByProductId/findByProductId';
-import extractStore from '../utils/extractStore/extractStore';
+import findByProductId from '../utils/findByProductId/findByProductId';
+import extractItem from '../utils/extractItem/extractItem';
 
 @Controller('store')
 export class StoreController {
@@ -11,9 +11,9 @@ export class StoreController {
     findAll() {
         const response = fetchData();
 
-        const storeIds = response.data.flatMap(mapStore);
+        const items = response.data.flatMap(mapStore)
 
-        return storeIds?.map(extractStore(response.embedded.stores));
+        return items?.map(extractItem(response.embedded.stores));
     }
 
     @Get(':id')
@@ -21,9 +21,9 @@ export class StoreController {
     findOne(params) {
         const response = fetchData();
 
-        const storeIds = response.data.find(findById(params.id))?.stores
+        const foundStores = response.data.find(findById(params.id)).stores;
 
-        return storeIds?.map(extractStore(response.embedded.stores));
+        return foundStores.map(extractItem(response.embedded.stores));
     }
 
     @Get('/byProductId/:id')
@@ -31,8 +31,8 @@ export class StoreController {
     findByProductId(params) {
         const response = fetchData();
 
-        const storeIds = response.data.find(findByProductIdId(params.id))?.stores
+        const matchingBrands = response.data.filter(findByProductId(params.id));
 
-        return storeIds?.map(extractStore(response.embedded.stores));
+        return matchingBrands.flatMap(brand => brand.stores).map(extractItem(response.embedded.stores));
     }
 }

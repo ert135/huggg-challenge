@@ -2,21 +2,24 @@ import { Bind, Controller, Get, Param } from '@nestjs/common';
 import fetchData  from "../dataService";
 import mapProduct from "../utils/mapProduct/mapProduct";
 import findById from "../utils/findById/findById";
+import extractItem from '../utils/extractItem/extractItem';
 
 @Controller('product')
 export class ProductController {
     @Get()
     findAll() {
-      const brands = fetchData();
+      const response = fetchData();
 
-      return brands.data.flatMap(mapProduct);
+      const found = response?.data.flatMap(mapProduct);
+
+      return found.map(extractItem(response.embedded.products));
     }
 
     @Get(':id')
     @Bind(Param())
     findOne(params) {
-        const brands = fetchData();
+      const response = fetchData();
 
-        return brands.data.find(findById(params.id))?.products
+      return response?.data.find(findById(params.id))?.products.map(extractItem(response.embedded.products));
     }
 }
