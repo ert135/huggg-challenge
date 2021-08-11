@@ -21,9 +21,9 @@ export class StoreController {
     findOne(params) {
         const response = fetchData();
 
-        const foundStores = response.data.find(findById(params.id)).stores;
+        const foundStores = response.data.find(findById(params.id))?.stores;
 
-        return foundStores.map(extractItem(response.embedded.stores));
+        return foundStores?.map(extractItem(response.embedded.stores));
     }
 
     @Get('/byProductId/:id')

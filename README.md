@@ -1,13 +1,23 @@
 # huggg-challenge
 
 ## Description
+Includes 4 endpoints
 
+- /brand
+- /brand/:id
 
+- /product
+- /product/:id
+
+- /store
+- /store/:id
+- /store/byProductId/:id
 
 ## Installation
 
 ```bash
 $ npm install
+$ npm run start
 ```
 
 ## Running the app
