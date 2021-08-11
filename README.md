@@ -1,7 +1,7 @@
 # huggg-challenge
 
 ## Description
-Includes 4 endpoints
+Includes 7 endpoints
 
 - /brand
 - /brand/:id
