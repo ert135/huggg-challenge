@@ -16,10 +16,14 @@ const MOCK_BRAND_2 = {
 }
 
 jest.mock('../dataService', () => {
-  return () => [
-    MOCK_BRAND,
-    MOCK_BRAND_2,
-  ];
+  return () => (
+    {
+      data: [
+        MOCK_BRAND,
+        MOCK_BRAND_2,
+      ]
+    }
+  )
 });
 
 describe('Product Controller', () => {

@@ -9,7 +9,7 @@ export class BrandController {
     findAll() {
       const brands = fetchData();
 
-      return brands.map(mapBrand);
+      return brands.data.map(mapBrand);
     }
 
     @Get(':id')
@@ -17,6 +17,6 @@ export class BrandController {
     findOne(params) {
         const brands = fetchData();
 
-        return brands.map(mapBrand).find(findById(params.id));
+        return brands.data.map(mapBrand).find(findById(params.id));
     }
 }

@@ -1,3 +1,3 @@
-const findById = id => item => item.id === id;
+const findById = id => brand => brand.id === id;
 
 export default findById;

@@ -38,9 +38,13 @@ const MOCK_BRAND = {
 }
 
 jest.mock('../dataService', () => {
-  return () => [
-    MOCK_BRAND
-  ];
+  return () => (
+    {
+      data: [
+        MOCK_BRAND
+      ]
+    }
+  )
 });
 
 describe('Brand Controller', () => {

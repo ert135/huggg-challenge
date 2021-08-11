@@ -9,7 +9,7 @@ export class ProductController {
     findAll() {
       const brands = fetchData();
 
-      return brands.flatMap(mapProduct);
+      return brands.data.flatMap(mapProduct);
     }
 
     @Get(':id')
@@ -17,6 +17,6 @@ export class ProductController {
     findOne(params) {
         const brands = fetchData();
 
-        return brands.find(findById(params.id))?.products
+        return brands.data.find(findById(params.id))?.products
     }
 }

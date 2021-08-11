@@ -1,6 +1,6 @@
 import findById from "./findById";
 
-describe('MapBrand', () => {
+describe('FindById', () => {
   it('returns a closure', () => {
     const result = findById(10);
 
