@@ -1,0 +1,9 @@
+{
+    "extends": [ "eslint:recommended", "plugin:jest/recommended" ],
+    "parser": "@babel/eslint-parser",
+    "plugins": ["jest"],
+    "env": {
+        "node": true,
+        "commonjs": true
+    }
+}
